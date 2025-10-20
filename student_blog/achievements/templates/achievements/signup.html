@@ -1,0 +1,254 @@
+{% extends 'achievements/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="signup-hero">
+    <div class="signup-hero-content">
+        <h1>Start Your Journey</h1>
+        <p>Join thousands of students showcasing their achievements</p>
+    </div>
+</section>
+
+<!-- Signup Form -->
+<div class="signup-container">
+    <div class="signup-card">
+        <div class="signup-header">
+            <h2>
+                <i class="fas fa-user-graduate"></i>
+                Create Your Account
+            </h2>
+            <p>Join our community of achievers</p>
+        </div>
+
+        <div class="signup-body">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                <i class="fas fa-{% if message.tags == 'success' %}check-circle{% else %}exclamation-circle{% endif %}"></i>
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <form method="POST" novalidate class="signup-form">
+                {% csrf_token %}
+                
+                <!-- Progress Steps -->
+                <div class="form-steps">
+                    <div class="step active"></div>
+                    <div class="step"></div>
+                    <div class="step"></div>
+                </div>
+
+                <!-- Personal Information -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="form-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <label for="id_username">Username *</label>
+                        <input type="text" name="username" id="id_username" class="form-control" placeholder="Choose a username" required>
+                        {% if form.username.errors %}
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ form.username.errors.0 }}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <label for="id_email">Email Address *</label>
+                        <input type="email" name="email" id="id_email" class="form-control" placeholder="Enter your email address" required>
+                        {% if form.email.errors %}
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ form.email.errors.0 }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="form-icon">
+                            <i class="fas fa-signature"></i>
+                        </div>
+                        <label for="id_first_name">First Name *</label>
+                        <input type="text" name="first_name" id="id_first_name" class="form-control" placeholder="Enter your first name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-icon">
+                            <i class="fas fa-signature"></i>
+                        </div>
+                        <label for="id_last_name">Last Name *</label>
+                        <input type="text" name="last_name" id="id_last_name" class="form-control" placeholder="Enter your last name" required>
+                    </div>
+                </div>
+
+                <!-- Academic Information -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="form-icon">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <label for="id_roll_number">Roll Number *</label>
+                        <input type="text" name="roll_number" id="id_roll_number" class="form-control" placeholder="Enter your roll number" required>
+                        {% if form.roll_number.errors %}
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ form.roll_number.errors.0 }}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <label for="id_year">Year *</label>
+                        <input type="number" name="year" id="id_year" class="form-control" placeholder="Enter your academic year" min="2000" max="2030" value="2025" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <label for="id_department">Department *</label>
+                    <input type="text" name="department" id="id_department" class="form-control" placeholder="Enter your department" value="Computer Science & Engineering" required>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <label for="id_phone">Phone Number</label>
+                    <input type="text" name="phone" id="id_phone" class="form-control" placeholder="Enter your phone number (optional)">
+                </div>
+
+                <!-- Password Section -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="form-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <label for="id_password1">Password *</label>
+                        <input type="password" name="password1" id="id_password1" class="form-control" placeholder="Create a strong password" required>
+                        <div class="password-strength">
+                            <div class="strength-bar" id="passwordStrength"></div>
+                        </div>
+                        {% if form.password1.errors %}
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ form.password1.errors.0 }}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <label for="id_password2">Confirm Password *</label>
+                        <input type="password" name="password2" id="id_password2" class="form-control" placeholder="Confirm your password" required>
+                        {% if form.password2.errors %}
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ form.password2.errors.0 }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-user-plus"></i>
+                    Create My Account
+                </button>
+            </form>
+
+            <!-- Feature Highlights -->
+            <div class="feature-highlights">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Showcase Achievements</h4>
+                        <p>Display your awards and competitions</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Join Community</h4>
+                        <p>Connect with fellow achievers</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Track Progress</h4>
+                        <p>Monitor your achievements growth</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="login-link">
+                <p>Already have an account?</p>
+                <a href="{% url 'login' %}" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign In to Your Account
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add form control classes
+    const formControls = document.querySelectorAll('input, select, textarea');
+    formControls.forEach(control => {
+        control.classList.add('form-control');
+    });
+
+    // Password strength indicator
+    const passwordInput = document.getElementById('id_password1');
+    const strengthBar = document.getElementById('passwordStrength');
+    
+    if (passwordInput && strengthBar) {
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 0;
+            
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+            if (password.match(/\d/)) strength++;
+            if (password.match(/[^a-zA-Z\d]/)) strength++;
+            
+            strengthBar.className = 'strength-bar';
+            if (strength === 0) {
+                strengthBar.style.width = '0%';
+            } else if (strength === 1) {
+                strengthBar.classList.add('strength-weak');
+            } else if (strength === 2 || strength === 3) {
+                strengthBar.classList.add('strength-medium');
+            } else {
+                strengthBar.classList.add('strength-strong');
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

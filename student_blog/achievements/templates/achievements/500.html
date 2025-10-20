@@ -1,0 +1,26 @@
+{% extends 'achievements/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center" style="padding: 8rem 2rem;">
+        <div style="font-size: 8rem; color: #ef4444; margin-bottom: 2rem;">
+            <i class="fas fa-server"></i>
+        </div>
+        <h1 style="font-size: 3rem; margin-bottom: 1rem; color: var(--text-dark);">
+            500 - Server Error
+        </h1>
+        <p style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 2rem;">
+            Something went wrong on our end. Please try again later.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="{% url 'home' %}" class="btn">
+                <i class="fas fa-home"></i> Homepage
+            </a>
+            <button onclick="window.location.reload()" class="btn btn-secondary">
+                <i class="fas fa-redo"></i> Try Again
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends 'achievements/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>Celebrating Excellence in Computer Science</h1>
+        <p>Showcasing the remarkable achievements of our students in competitions, hackathons, and innovation challenges</p>
+        <a href="{% url 'achievements' %}" class="cta-button">
+            <i class="fas fa-trophy"></i> Explore Achievements
+        </a>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="container">
+    <div class="grid grid-3">
+        <div class="card text-center animate-pulse">
+            <i class="fas fa-trophy fa-3x" style="color: #f59e0b;"></i>
+            <h3>{{ total_achievements|default:"0" }}+</h3>
+            <p>Total Achievements</p>
+        </div>
+        <div class="card text-center animate-pulse" style="animation-delay: 0.2s;">
+            <i class="fas fa-users fa-3x" style="color: #3b82f6;"></i>
+            <h3>{{ total_students|default:"0" }}+</h3>
+            <p>Active Students</p>
+        </div>
+        <div class="card text-center animate-pulse" style="animation-delay: 0.4s;">
+            <i class="fas fa-award fa-3x" style="color: #10b981;"></i>
+            <h3>50+</h3>
+            <p>National Awards</p>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Achievements -->
+<section class="container">
+    <div class="text-center" style="margin-bottom: 3rem;">
+        <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">🌟 Featured Achievements</h2>
+        <p style="color: var(--text-light); font-size: 1.1rem;">Recent outstanding accomplishments by our students</p>
+    </div>
+
+    <div class="achievement-grid">
+        {% for achievement in featured_achievements %}
+        <div class="achievement-card">
+            <!-- Achievement Image -->
+            {% if achievement.get_image_url %}
+                <img src="{{ achievement.get_image_url }}" alt="{{ achievement.name }}" class="achievement-image">
+            {% else %}
+                <div style="background: var(--gradient-primary); height: 200px; display: flex; align-items: center; justify-content: center; color: white;">
+                    <i class="fas fa-trophy fa-3x"></i>
+                </div>
+            {% endif %}
+            
+            <div class="achievement-content">
+                <h3>{{ achievement.name }}</h3>
+                <p style="color: var(--text-light); margin-bottom: 1rem;">{{ achievement.description|truncatewords:20|default:"No description available" }}</p>
+                
+                <div class="achievement-meta">
+                    <span class="meta-tag">{{ achievement.event }}</span>
+                    <span class="meta-tag" style="background: #fef3c7; color: #d97706;">{{ achievement.prize }}</span>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                    <small style="color: var(--text-light);">
+                        <i class="fas fa-user"></i> {{ achievement.student.get_full_name|default:"Unknown Student" }}
+                    </small>
+                    <small style="color: var(--text-light);">
+                        <i class="fas fa-calendar"></i> {{ achievement.date_achieved|date:"M Y"|default:"Recent" }}
+                    </small>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="card text-center" style="grid-column: 1 / -1; padding: 4rem 2rem;">
+            <i class="fas fa-trophy fa-4x" style="color: var(--text-light); margin-bottom: 2rem;"></i>
+            <h3>No Achievements Yet</h3>
+            <p style="color: var(--text-light); margin-bottom: 2rem;">
+                Be the first to showcase your achievement and inspire others!
+            </p>
+            {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="btn">
+                <i class="fas fa-plus"></i> Add Your Achievement
+            </a>
+            {% else %}
+            <a href="{% url 'signup' %}" class="btn">Join Now</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="container">
+    <div class="card text-center" style="background: var(--gradient-primary); color: white; margin: 4rem 0;">
+        <h2 style="font-size: 2.2rem; margin-bottom: 1rem;">Ready to Showcase Your Talent?</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+            Join our community of achievers and inspire others with your success stories
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="btn" style="background: white; color: var(--primary-blue);">
+                <i class="fas fa-plus"></i> Add Achievement
+            </a>
+            <a href="{% url 'achievements' %}" class="btn" style="background: transparent; border: 2px solid white;">
+                <i class="fas fa-trophy"></i> View All
+            </a>
+            {% else %}
+            <a href="{% url 'signup' %}" class="btn" style="background: white; color: var(--primary-blue);">
+                <i class="fas fa-user-plus"></i> Get Started
+            </a>
+            <a href="{% url 'login' %}" class="btn" style="background: transparent; border: 2px solid white;">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

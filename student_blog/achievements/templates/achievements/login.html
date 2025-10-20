@@ -1,0 +1,73 @@
+{% extends 'achievements/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="form-container">
+    <div class="text-center" style="margin-bottom: 2rem;">
+        <h2 style="font-size: 2.2rem; margin-bottom: 0.5rem;">
+            <i class="fas fa-sign-in-alt"></i> Welcome Back
+        </h2>
+        <p style="color: var(--text-light);">Sign in to your CSE Achievers account</p>
+    </div>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{% if message.tags == 'error' %}error{% else %}success{% endif %}">
+        <i class="fas fa-{% if message.tags == 'error' %}exclamation-circle{% else %}check-circle{% endif %}"></i>
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <form method="POST" novalidate>
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="username"><i class="fas fa-user"></i> Username or Email</label>
+            <input type="text" name="username" id="username" class="form-control" placeholder="Enter your username or email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password"><i class="fas fa-lock"></i> Password</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required>
+            <div style="text-align: right; margin-top: 0.5rem;">
+                <a href="#" style="color: var(--primary-blue); text-decoration: none; font-size: 0.875rem;">
+                    Forgot password?
+                </a>
+            </div>
+        </div>
+
+        <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">
+            <i class="fas fa-sign-in-alt"></i> Sign In
+        </button>
+    </form>
+
+    <div style="margin: 2rem 0; position: relative; text-align: center;">
+        <div style="height: 1px; background: #e5e7eb; position: absolute; top: 50%; left: 0; right: 0;"></div>
+        <span style="background: white; padding: 0 1rem; color: var(--text-light);">or</span>
+    </div>
+
+    <div class="text-center">
+        <p style="color: var(--text-light); margin-bottom: 1rem;">
+            Don't have an account? 
+        </p>
+        <a href="{% url 'signup' %}" class="btn btn-secondary" style="width: 100%;">
+            <i class="fas fa-user-plus"></i> Create New Account
+        </a>
+    </div>
+
+    <!-- Demo Accounts Info -->
+    <div class="card" style="margin-top: 2rem; background: #f0f9ff; border: 1px solid #bae6fd;">
+        <h4 style="color: #0369a1; margin-bottom: 0.5rem;">
+            <i class="fas fa-info-circle"></i> Demo Access
+        </h4>
+        <p style="color: #075985; font-size: 0.875rem; margin-bottom: 0.5rem;">
+            For testing purposes, you can use:
+        </p>
+        <div style="font-size: 0.8rem; color: #0c4a6e;">
+            <div><strong>Username:</strong> demo_student</div>
+            <div><strong>Password:</strong> demo1234</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

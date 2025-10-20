@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Base_One Achievers Portal - Celebrating Student Excellence{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'achievements/css/main.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i> Base_One Achievers
+        </div>
+        
+<!-- In your nav-links section -->
+<ul class="nav-links">
+    <li><a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a></li>
+    <li><a href="{% url 'achievements' %}"><i class="fas fa-trophy"></i> Achievements</a></li>
+    
+    {% if user.is_authenticated %}
+        <li><a href="{% url 'dashboard' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li><a href="{% url 'profile' %}"><i class="fas fa-user-circle"></i> Profile</a></li>
+        
+        {% if user.is_staff %}
+            <li><a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">
+                <i class="fas fa-cog"></i> Staff Panel
+            </a></li>
+            <li><a href="/admin/" class="btn" style="background: var(--accent-purple); color: white;">
+                <i class="fas fa-shield-alt"></i> Admin
+            </a></li>
+        {% endif %}
+        
+        <li>
+            <a href="{% url 'logout' %}" class="btn btn-secondary">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </li>
+    {% else %}
+        <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        <li><a href="{% url 'signup' %}" class="btn"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+    {% endif %}
+</ul>
+
+        <!-- Hamburger Menu Button -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav" id="mobileNav">
+        <button class="close-mobile-nav" id="closeMobileNav" aria-label="Close navigation menu">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <ul class="mobile-nav-links">
+            <li><a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="{% url 'achievements' %}"><i class="fas fa-trophy"></i> Achievements</a></li>
+            <li><a href="#about"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'dashboard' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="{% url 'profile' %}"><i class="fas fa-user-circle"></i> Profile</a></li>
+                <li>
+                    <a href="{% url 'logout' %}" class="btn" style="background: var(--white); color: var(--primary-blue);">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+            {% else %}
+                <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="{% url 'signup' %}" class="btn" style="background: var(--white); color: var(--primary-blue);">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}
+        {% endblock %}
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <div class="about-content">
+                    <h2>About Base_One Achievers</h2>
+                    <p style="font-size: 1.2rem; color: var(--text-light); line-height: 1.8;">
+                        The Department of Computer Science at Base_One College is dedicated to 
+                        fostering technical brilliance, research innovation, and student success. Our platform celebrates 
+                        the remarkable achievements of our students in various competitions, hackathons and innovation challenges.
+                    </p>
+                    
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">Students</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">100+</span>
+                            <span class="stat-label">Achievements</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-label">National Awards</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">25+</span>
+                            <span class="stat-label">Events</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-2">
+                        <div class="card">
+                            <h3><i class="fas fa-eye"></i> Our Vision</h3>
+                            <p>To produce globally competent professionals through quality education and continuous innovation, 
+                            creating leaders who drive technological advancement and social change.</p>
+                        </div>
+                        <div class="card">
+                            <h3><i class="fas fa-bullseye"></i> Our Mission</h3>
+                            <p>Provide excellent academic infrastructure, encourage participation in national-level competitions, 
+                            and empower innovation, leadership, and research culture among students.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <div class="contact-content">
+                    <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem;">Get In Touch</h2>
+                    
+                    <div class="contact-grid">
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4>Visit Us</h4>
+                                    <p>Base_One College<br> Group 4</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>
+                                    <h4>Call Us</h4>
+                                    <p>+256-781672757<br>+256-705353478</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4>Email Us</h4>
+                                    <p>baseonedevelopers@gmail.com<br>achieve@baseone.ac.ug</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h4>Working Hours</h4>
+                                    <p>Monday - Friday: 9:00 AM - 5:00 PM<br>Saturday: 9:00 AM - 1:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-form">
+                            <h3 style="color: var(--text-dark); margin-bottom: 1.5rem;">Send us a Message</h3>
+                            <form id="contactForm" method="POST" action="{% url 'contact_submit' %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="name"><i class="fas fa-user"></i> Your Name</label>
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="subject"><i class="fas fa-tag"></i> Subject</label>
+                                    <input type="text" id="subject" name="subject" class="form-control" placeholder="Enter subject" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message"><i class="fas fa-comment"></i> Message</label>
+                                    <textarea id="message" name="message" class="form-control" rows="5" placeholder="Enter your message" required></textarea>
+                                </div>
+                                <button type="submit" class="btn" style="width: 100%;">
+                                    <i class="fas fa-paper-plane"></i> Send Message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Base_One Achievers</h3>
+                    <p style="color: #d1d5db; line-height: 1.6;">
+                        Celebrating excellence and innovation in Computer Science 
+                        Join us in recognizing the remarkable achievements of our students.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'home' %}"><i class="fas fa-arrow-right"></i> Home</a></li>
+                        <li><a href="{% url 'achievements' %}"><i class="fas fa-arrow-right"></i> Achievements</a></li>
+                        <li><a href="#about"><i class="fas fa-arrow-right"></i> About Us</a></li>
+                        <li><a href="#contact"><i class="fas fa-arrow-right"></i> Contact</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'dashboard' %}"><i class="fas fa-arrow-right"></i> Dashboard</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Departments</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-code"></i> Computer Science</a></li>
+                        <!-- <li><a href="#"><i class="fas fa-cogs"></i> </a></li>
+                        <li><a href="#"><i class="fas fa-bolt"></i> Electrical</a></li>
+                        <li><a href="#"><i class="fas fa-building"></i> Civil</a></li>
+                        <li><a href="#"><i class="fas fa-atom"></i> Science & Humanities</a></li> -->
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i>  Base_One College</a></li>
+                        <li><a href="tel:+919876543210"><i class="fas fa-phone"></i> +256-781672757</a></li>
+                        <li><a href="mailto:cse@mailam.edu.in"><i class="fas fa-envelope"></i> baseone@gmail.ac.ug</a></li>
+                        <li><a href="#"><i class="fas fa-clock"></i> Mon-Fri: 9AM-5PM</a></li>
+                        <li><a href="#"><i class="fas fa-globe"></i> www.baseone.edu.in</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Computer Science Department, Base_One College. All Rights Reserved.</p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+                    Designed with <i class="fas fa-heart" style="color: #ef4444;"></i> for Student Excellence
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{% static 'achievements/js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

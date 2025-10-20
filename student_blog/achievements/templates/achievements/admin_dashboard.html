@@ -1,0 +1,106 @@
+{% extends 'achievements/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <!-- Admin Header -->
+    <div class="card" style="background: var(--gradient-secondary); color: white; margin-bottom: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">
+                    <i class="fas fa-shield-alt"></i> Staff Dashboard
+                </h1>
+                <p style="opacity: 0.9; font-size: 1.1rem;">
+                    Welcome, {{ user.get_full_name }}! Manage the Base_One Achievers Portal
+                </p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                {% if user.is_superuser %}
+                <a href="{% url 'register_staff' %}" class="btn" style="background: white; color: var(--primary-blue);">
+                    <i class="fas fa-user-plus"></i> Add Staff
+                </a>
+                {% endif %}
+                <a href="/admin/" class="btn" style="background: transparent; border: 2px solid white;">
+                    <i class="fas fa-cog"></i> Admin Panel
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="grid grid-4" style="margin-bottom: 3rem;">
+        <div class="card text-center">
+            <i class="fas fa-users fa-2x" style="color: #3b82f6; margin-bottom: 1rem;"></i>
+            <h3>{{ student_count }}</h3>
+            <p>Total Students</p>
+        </div>
+        <div class="card text-center">
+            <i class="fas fa-user-tie fa-2x" style="color: #8b5cf6; margin-bottom: 1rem;"></i>
+            <h3>{{ staff_count }}</h3>
+            <p>Staff Members</p>
+        </div>
+        <div class="card text-center">
+            <i class="fas fa-trophy fa-2x" style="color: #f59e0b; margin-bottom: 1rem;"></i>
+            <h3>{{ achievement_count }}</h3>
+            <p>Total Achievements</p>
+        </div>
+        <div class="card text-center">
+            <i class="fas fa-clock fa-2x" style="color: #ef4444; margin-bottom: 1rem;"></i>
+            <h3>{{ pending_approvals }}</h3>
+            <p>Pending Approvals</p>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="grid grid-2" style="gap: 2rem;">
+        <div class="card">
+            <h2 style="margin-bottom: 1.5rem; color: var(--text-dark);">
+                <i class="fas fa-rocket"></i> Quick Actions
+            </h2>
+            <div style="display: grid; gap: 1rem;">
+                <a href="/admin/achievements/achievement/" class="btn" style="justify-content: start; gap: 1rem;">
+                    <i class="fas fa-trophy"></i> Manage Achievements
+                </a>
+                <a href="/admin/auth/user/" class="btn btn-secondary" style="justify-content: start; gap: 1rem;">
+                    <i class="fas fa-users"></i> Manage Users
+                </a>
+                <a href="/admin/achievements/contactmessage/" class="btn" style="justify-content: start; gap: 1rem;">
+                    <i class="fas fa-envelope"></i> View Contact Messages
+                </a>
+                {% if user.is_superuser %}
+                <a href="{% url 'register_staff' %}" class="btn btn-secondary" style="justify-content: start; gap: 1rem;">
+                    <i class="fas fa-user-plus"></i> Register New Staff
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 style="margin-bottom: 1.5rem; color: var(--text-dark);">
+                <i class="fas fa-chart-bar"></i> Statistics
+            </h2>
+            <div style="display: grid; gap: 1.5rem;">
+                <div>
+                    <h4 style="color: var(--text-dark); margin-bottom: 0.5rem;">Achievement Status</h4>
+                    <div style="background: #f3f4f6; height: 8px; border-radius: 4px; margin-bottom: 0.5rem;">
+                        <div style="background: var(--gradient-primary); height: 100%; border-radius: 4px; width: {% widthratio approved_achievements achievement_count 100 %}%;"></div>
+                    </div>
+                    <p style="color: var(--text-light); font-size: 0.9rem;">
+                        {{ approved_achievements }} approved out of {{ achievement_count }} total
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 style="color: var(--text-dark); margin-bottom: 0.5rem;">User Distribution</h4>
+                    <div style="background: #f3f4f6; height: 8px; border-radius: 4px; margin-bottom: 0.5rem;">
+                        <div style="background: var(--gradient-secondary); height: 100%; border-radius: 4px; width: {% widthratio staff_count student_count|add:staff_count 100 %}%;"></div>
+                    </div>
+                    <p style="color: var(--text-light); font-size: 0.9rem;">
+                        {{ staff_count }} staff members and {{ student_count }} students
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
